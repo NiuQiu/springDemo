@@ -11,9 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 @Service
 public class BookService {
@@ -67,12 +66,8 @@ public class BookService {
             book.setBookId(Utility.generateUUID());
         }
 
-        if(book.getAuthorId() == null){
-            book.setAuthorId(author.getAuthorId());
-        }
-        if(book.getPublisherId() == null){
-            book.setPublisherId(publisher.getPublisherId());
-        }
+        book.setAuthor(author);
+        book.setPublisher(publisher);
 
         bookDAO.save(book);
         return book.getBookId().toString();
@@ -83,9 +78,8 @@ public class BookService {
     }
 
     public Book getBook(String bookId){
-        UUID id;
         if(bookId != null){
-            id = UUID.fromString(bookId);
+            UUID id = UUID.fromString(bookId);
             return bookDAO.findById(id).get();
         }else{
             throw new IllegalArgumentException("book id is not provided");

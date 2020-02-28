@@ -12,5 +12,6 @@ public class JerseyConfig extends ResourceConfig{
     public JerseyConfig() {
         register(BookController.class);
         register(GenericExceptionMapper.class);
+        register(CORSFilter.class);
     }
 }

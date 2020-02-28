@@ -1,5 +1,6 @@
 package com.andrew.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,10 +14,16 @@ public class Book {
     @Id
     @Column(name = "book_id")
     private UUID bookId;
-    @Column(name = "author_id", nullable = false)
-    private UUID authorId;
-    @Column(name = "publisher_id", nullable = false)
-    private UUID publisherId;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private Author author;
+
+    @ManyToOne
+    @JoinColumn(name = "publisher_id", nullable = false)
+    private Publisher publisher;
+
+
     @Column(name = "publish_date")
     private BigInteger date;
     private String title;
@@ -30,20 +37,13 @@ public class Book {
     public Book() {
     }
 
-    public UUID getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(UUID authorId) {
-        this.authorId = authorId;
-    }
-
-    public UUID getPublisherId() {
-        return publisherId;
-    }
-
-    public void setPublisherId(UUID publisherId) {
-        this.publisherId = publisherId;
+    @JsonIgnore
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public UUID getBookId() {
@@ -108,6 +108,15 @@ public class Book {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    @JsonIgnore
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     //    @Override

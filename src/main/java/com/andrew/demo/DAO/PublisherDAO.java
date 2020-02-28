@@ -11,5 +11,5 @@ import java.util.UUID;
  */
 public interface PublisherDAO extends CrudRepository<Publisher, UUID>{
     @Query(value = "SELECT count(*) FROM bookstore.publisher p where p.publisher_id = ?1", nativeQuery = true)
-    public int getPublisherCount(UUID publisherId);
+    int getPublisherCount(UUID publisherId);
 }

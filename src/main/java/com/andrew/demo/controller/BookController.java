@@ -7,11 +7,13 @@ import com.andrew.demo.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -54,15 +56,15 @@ public class BookController {
     @Consumes("application/json")
     @Path("/init")
     public Response addBook(PostBody payload) {
-        UUID bookId = payload.getBook().getBookId();
+        String bookTitle = payload.getBook().getTitle();
         try{
 
             PostResponse res = new PostResponse(bookService.addBook(payload));
-            LOGGER.info("Adding book {} successful", bookId);
+            LOGGER.info("Adding bookTitle {} successful", bookTitle);
             return Response.status(Response.Status.CREATED).entity(res).build();
         }catch(Exception e){
             e.printStackTrace();
-            LOGGER.error("Adding book {} failed {}", bookId, e.getMessage());
+            LOGGER.error("Adding bookTitle {} failed {}", bookTitle, e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 

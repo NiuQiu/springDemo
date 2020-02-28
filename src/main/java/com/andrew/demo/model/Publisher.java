@@ -1,10 +1,9 @@
 package com.andrew.demo.model;
 
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -13,6 +12,9 @@ public class Publisher {
     @Id
     private UUID publisherId;
     private String country;
+
+    @OneToMany(mappedBy = "publisher")
+    private Set<Book> pbBooks;
 
     public Publisher() {
     }
@@ -31,5 +33,13 @@ public class Publisher {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Set<Book> getPbBooks() {
+        return pbBooks;
+    }
+
+    public void setPbBooks(Set<Book> pbBooks) {
+        this.pbBooks = pbBooks;
     }
 }

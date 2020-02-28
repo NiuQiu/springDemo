@@ -2,10 +2,12 @@ package com.andrew.demo.service;
 
 import com.andrew.demo.DAO.AuthorDAO;
 import com.andrew.demo.model.Author;
+import com.andrew.demo.model.Book;
 import com.andrew.demo.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service

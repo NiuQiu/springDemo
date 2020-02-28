@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,6 +17,9 @@ public class Author {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+
+    @OneToMany(mappedBy = "author")
+    private Set<Book> authorBooks;
 
     public Author() {
     }
@@ -42,5 +46,13 @@ public class Author {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<Book> getAuthorBooks() {
+        return authorBooks;
+    }
+
+    public void setAuthorBooks(Set<Book> authorBooks) {
+        this.authorBooks = authorBooks;
     }
 }
