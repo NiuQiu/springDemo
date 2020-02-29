@@ -12,4 +12,7 @@ import java.util.UUID;
 public interface AuthorDAO extends CrudRepository<Author, UUID>{
     @Query(value = "SELECT count(*) FROM bookstore.author a where a.author_id = :authorId", nativeQuery = true)
     public int getAuthorCount(@Param("authorId") UUID authorId);
+
+    @Query(value = "SELECT * FROM bookstore.author where first_name = ?1 AND last_name = ?2", nativeQuery = true)
+    public Author findByFullName(String fName, String lName);
 }

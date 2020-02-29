@@ -18,8 +18,12 @@ public class AuthorService {
     public AuthorService() {
     }
 
-    public boolean getAuthor(UUID authorId){
+    public boolean findAuthor(UUID authorId){
         return authorDAO.getAuthorCount(authorId) > 0;
+    }
+
+    public Author getAuthor(UUID authorId) {
+        return authorDAO.findById(authorId).get();
     }
 
     public void addAuthor(Author author){
@@ -27,5 +31,9 @@ public class AuthorService {
             author.setAuthorId(Utility.generateUUID());
         }
         authorDAO.save(author);
+    }
+
+    public Author findAuthorName(String firstName, String lastName){
+        return authorDAO.findByFullName(firstName, lastName);
     }
 }

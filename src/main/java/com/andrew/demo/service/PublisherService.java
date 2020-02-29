@@ -17,8 +17,13 @@ public class PublisherService {
     public PublisherService() {
     }
 
-    public boolean getPubliser(UUID publisherId){
+    public boolean findPubliser(UUID publisherId){
         return publisherDAO.getPublisherCount(publisherId) > 0;
+    }
+
+    public Publisher getPublisher(String publisherName, UUID publisherId){
+
+        return publisherId==null?publisherDAO.findByName(publisherName) : publisherDAO.findById(publisherId).get();
     }
 
     public void addPulbisher(Publisher publisher){

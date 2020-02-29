@@ -1,6 +1,8 @@
 package com.andrew.demo.controller;
 
+import com.andrew.demo.andrewException.DuplicationException;
 import com.andrew.demo.model.Book;
+import com.andrew.demo.model.ErrResponse;
 import com.andrew.demo.model.PostBody;
 import com.andrew.demo.model.PostResponse;
 import com.andrew.demo.service.BookService;
@@ -59,11 +61,16 @@ public class BookController {
         try{
 
             PostResponse res = new PostResponse(bookService.addBook(payload));
-            LOGGER.info("Adding bookTitle {} successful", bookTitle);
+            LOGGER.info("Adding book {} successful", bookTitle);
             return Response.status(Response.Status.CREATED).entity(res).build();
-        }catch(Exception e){
+        }catch(DuplicationException de){
+            ErrResponse err = new ErrResponse(400, "Duplication error, book has been added");
+            LOGGER.error("Book {} has been added", bookTitle);
+            return Response.status(Response.Status.BAD_REQUEST).entity(err).build();
+        }
+        catch(Exception e){
             e.printStackTrace();
-            LOGGER.error("Adding bookTitle {} failed {}", bookTitle, e.getMessage());
+            LOGGER.error("Adding book {} failed. Reason: {}", bookTitle, e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 

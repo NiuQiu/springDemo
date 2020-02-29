@@ -12,6 +12,7 @@ public class Publisher {
     @Id
     private UUID publisherId;
     private String country;
+    private String name;
 
     @OneToMany(mappedBy = "publisher")
     private Set<Book> pbBooks;
@@ -41,5 +42,13 @@ public class Publisher {
 
     public void setPbBooks(Set<Book> pbBooks) {
         this.pbBooks = pbBooks;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -1,11 +1,10 @@
 package com.andrew.demo.model;
 
+import com.andrew.demo.utility.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +29,7 @@ public class Book {
     private String isbn;
     private String genre;
     private String type;
+
     @Column(name = "publication_year")
     private int publication;
     private double price;

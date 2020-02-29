@@ -12,6 +12,7 @@ CREATE TABLE bookstore.author
 CREATE TABLE bookstore.publisher
 (
   publisher_id UUID PRIMARY KEY NOT NULL,
+  name VARCHAR(255) UNIQUE ,
   country VARCHAR(255) NOT NULL
 );
 

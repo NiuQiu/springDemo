@@ -10,6 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface BookDAO extends CrudRepository<Book, UUID>{
-//    @Query(value="SELECT * FROM bookstore.book b JOIN FETCH where b.book_id = :bookId")
-//    public Book getBookById(@Param("bookId") UUID bookId);
+    @Query(value="SELECT COUNT(*) FROM bookstore.book WHERE isbn = ?1", nativeQuery = true)
+    public int hasBook(String isbn);
 }
