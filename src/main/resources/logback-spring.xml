@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <property name="LOG_FILE" value="./logs"/>
+    <property name="env" value = "${spring.profiles.active}"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+        <immediateFlush>false</immediateFlush>
+    </appender>
+
+    <if condition='property("demo.env").equalsIgnoreCase("prod")'>
+        <then>
+            <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${LOG_FILE}/app.log</file>
+                <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                    <Pattern>
+                        %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+                    </Pattern>
+                </encoder>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>
+                        ${LOG_FILE}/archoved/app.%d{yyyy-MM-dd}.%i.log
+                    </fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>10MB</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+            </appender>
+        </then>
+    </if>
+
+    <springProfile name="dev">
+        <logger name="com.andrew.demo" level="DEBUG" additivity="false">
+            <appender-ref ref="STDOUT" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="prod">
+        <root level="DEBUG">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE" />
+        </root>
+    </springProfile>
+
+</configuration>
